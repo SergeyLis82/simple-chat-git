@@ -1,0 +1,66 @@
+version: '3'
+
+networks:
+    default:
+        external:
+            name: my-test-network
+
+services:
+    nginx:
+        image: nginx
+        #container_name: nginx
+        ports:
+            - "11080:80"
+
+        volumes:
+            - ./nginx/core:/etc/nginx/conf.d
+            - ./nginx/www/simple-chat:/var/www/simple-chat
+            - ./nginx/Logs:/var/log/nginx/
+            - ./nginx/html:/usr/share/nginx/html/
+
+        depends_on:
+            - php-fpm
+
+        deploy:
+            #mode: replicated
+            replicas: 3
+            
+    php-fpm:
+        image: php-fpm
+        #build:
+        #    context: ./php
+        #    dockerfile: Dockerfile
+        #container_name: php-fpm
+
+        volumes:
+            - ./nginx/www/simple-chat:/var/www/simple-chat
+
+        depends_on:
+            - mysql
+
+        deploy:
+            #mode: replicated
+            replicas: 3
+
+
+    mysql:
+        image: mysql
+        #container_name: mysql
+
+        volumes:
+            - ./mysql:/var/lib/mysql
+            - ./mysql_backup:/mnt/backups
+            - ./data:/docker-entrypoint-initdb.d
+
+        environment:
+            - MYSQL_ROOT_PASSWORD=Qwerty#123
+            - MYSQL_DATABASE=sandbox
+            - MYSQL_USER=mysql
+            - MYSQL_PASSWORD=mysql
+
+        deploy:
+            #mode: replicated
+            replicas: 3
+
+
+
