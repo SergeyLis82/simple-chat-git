@@ -1,9 +1,9 @@
 version: '3'
 
-networks:
-    default:
-        external:
-            name: my-test-network
+#networks:
+#    default:
+#        external:
+#            name: my-test-network
 
 services:
     nginx:
@@ -26,11 +26,7 @@ services:
             replicas: 3
             
     php-fpm:
-        image: php-fpm
-        #build:
-        #    context: ./php
-        #    dockerfile: Dockerfile
-        #container_name: php-fpm
+        image: sergeylis82/php-fpm:7.4
 
         volumes:
             - ./nginx/www/simple-chat:/var/www/simple-chat
@@ -44,11 +40,12 @@ services:
 
 
     mysql:
-        image: mysql
+        image: mysql:8.0
         #container_name: mysql
 
         volumes:
-            - ./mysql:/var/lib/mysql
+            #- ./mysql:/var/lib/mysql
+            - /mnt/gluster/databases/simple-chat:/var/lib/mysql
             - ./mysql_backup:/mnt/backups
             - ./data:/docker-entrypoint-initdb.d
 
