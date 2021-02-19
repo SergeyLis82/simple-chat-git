@@ -1,2 +1,5 @@
+docker-compose.yml
 mysql/database/*
 data
+nginx/Logs/*
+mysql_backup
