@@ -16,6 +16,7 @@ export MYSQL_VER="8.0"
 export MYSQL_IMG="mysql:${MYSQL_VER}"
 export MYSQL_DB="${PROJECT_DIR}/mysql/database"
 export MYSQL_DATA="${PROJECT_DIR}/mysql/data"
+export MYSQL_BACKUP="${PROJECT_DIR}/mysql_backup"
 export MYSQL_ROOT_PASSWORD="Qwerty#123"
 export MYSQL_DATABASE="sandbox"
 export MYSQL_USER="mysql"
@@ -25,8 +26,8 @@ init() {
     if [[ -n "$1" ]]; then
 		export PORT=$1;
 	fi
-    docker-compose -f ${PROJECT_DIR}/docker-compose.yml.tpl pull
-    docker-compose -f ${PROJECT_DIR}/docker-compose.yml.tpl config > ${PROJECT_DIR}/docker-compose.yml
+    docker-compose -f ${PROJECT_DIR}/docker-compose.tpl.yml pull
+    docker-compose -f ${PROJECT_DIR}/docker-compose.tpl.yml config > ${PROJECT_DIR}/docker-compose.yml
 }
 
 up() {

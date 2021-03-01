@@ -27,6 +27,7 @@ services:
         volumes:
             - "${MYSQL_DB}:/var/lib/mysql:rw"
             - "${MYSQL_DATA}:/docker-entrypoint-initdb.d:rw"
+            - "${MYSQL_BACKUP}:/mnt/backups:rw"
 
         environment:
             - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
